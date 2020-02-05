@@ -1,0 +1,61 @@
+package sample;
+
+public class Weather {
+    private String name;
+    private String country;
+    private double temp;
+    private long humidity;
+    private double lon;
+    private double lat;
+    private long Sunrise;
+    private long Sunset;
+    private int visibility;
+
+    public Weather(String name, String country, double temp, long humidity, double lon, double lat,long Sunrise, long Sunset, int visibility){
+        this.name=name;
+        this.country=country;
+        this.temp=temp;
+        this.humidity=humidity;
+        this.lon=lon;
+        this.lat=lat;
+        this.Sunrise=Sunrise;
+        this.Sunset=Sunset;
+        this.visibility=visibility;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public double getTemp() {
+        return temp;
+    }
+
+    public long getHumidity() {
+        return humidity;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public long getSunrise() {
+        return Sunrise;
+    }
+
+    public long getSunset() {
+        return Sunset;
+    }
+
+    public int getVisibility() {
+        return visibility;
+    }
+}
