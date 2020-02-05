@@ -1,0 +1,59 @@
+package sample;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.SimpleTimeZone;
+
+
+public class WebWeather {
+
+    public Weather getData(String city, String code2) throws NoSuchCityException {
+        Weather weather = null;
+        try {
+            URL url = new URL(
+                    "https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=895108122ef578e7aee7ec4f05c2ee76" +
+                            city + "," + code2);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+
+            if (conn.getResponseCode() == 200) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        (conn.getInputStream())));
+                String output = br.readLine();
+                System.out.println(output);
+
+                JSONObject jsonObject = new JSONObject(output);
+                String name = jsonObject(output).getString("Name");
+                String country = jsonObject(output).getJSONObject("sys").getString("Country");
+                double temp = jsonObject(output).getJSONObject("main").getDouble("Temp");
+                int humidity = jsonObject(output).getJSONObject("main").getInt("Humidity");
+                double lon = jsonObject(output).getJSONObject("coord").getDouble("Lon");
+                double lat = jsonObject(output).getJSONObject("coord").getDouble("Lat");
+                long Sunrise = jsonObject.getJSONObject("sys").getLong("Sunrise");
+                long Sunset = jsonObject.getJSONObject("sys").getLong("Sunset");
+                int visibility = jsonObject.getInt("Visibility:");
+
+                System.out.println("\n" + "Country: " + country + "\n" + "City: "
+                        + name + "\n" + "Temperature: " + temp + "\n" + "Humidity: " + humidity +
+                        "\n" + "Coordinates: " + lon + " " + lat + "\n" + "Sunrise: " + Sunrise + "\n" + "Sunset: " + Sunset +
+                        "Visibility: " + visibility);
+
+                return new Weather(country, name, temp, humidity, lon, lat, Sunrise, Sunset, visibility);
+            }
+            conn.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            throw new NoSuchCityException("City not found");
+        }
+        return null;
+    }
+}
+
+
+
